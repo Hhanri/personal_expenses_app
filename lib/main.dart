@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pesronal_expenses_app/models/transaction_model.dart';
-import 'package:pesronal_expenses_app/widgets/price_display_widget.dart';
-import 'package:pesronal_expenses_app/widgets/title_display_widget.dart';
+import 'package:pesronal_expenses_app/widgets/add_transaction_widget.dart';
+import 'package:pesronal_expenses_app/widgets/transactions_list_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,26 +28,36 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: TransactionModel.mockData.length,
-              itemBuilder: (BuildContext context, int index) {
-                final TransactionModel transaction = TransactionModel.mockData[index];
-                return ListTile(
-                  title: TitleDisplayWidget(title: transaction.title,),
-                  subtitle: Text(transaction.date.toString()),
-                  trailing: PriceDisplayWidget(
-                    price: transaction.amount,
-                  )
-                );
-              },
-            ),
-          )
-        ],
-      ),
+    return const Scaffold(
+      body: HomeView()
+    );
+  }
+}
+
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  List<TransactionModel> transactions = [...TransactionModel.mockData];
+
+  void addTransaction(String title, double amount) {
+    setState(() {
+      transactions.add(TransactionModel(id: UniqueKey().toString(), title: title, amount: amount, date: DateTime.now()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        AddTransactionWidget(addTransaction: addTransaction,),
+        Expanded(
+          child: TransactionsListWidget(transactions: transactions,)
+        )
+      ],
     );
   }
 }
