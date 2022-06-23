@@ -31,18 +31,20 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          ListView.builder(
-            itemCount: TransactionModel.mockData.length,
-            itemBuilder: (BuildContext context, int index) {
-              final TransactionModel transaction = TransactionModel.mockData[index];
-              return ListTile(
-                title: TitleDisplayWidget(title: transaction.title,),
-                subtitle: Text(transaction.date.toString()),
-                trailing: PriceDisplayWidget(
-                  price: transaction.amount,
-                )
-              );
-            },
+          Expanded(
+            child: ListView.builder(
+              itemCount: TransactionModel.mockData.length,
+              itemBuilder: (BuildContext context, int index) {
+                final TransactionModel transaction = TransactionModel.mockData[index];
+                return ListTile(
+                  title: TitleDisplayWidget(title: transaction.title,),
+                  subtitle: Text(transaction.date.toString()),
+                  trailing: PriceDisplayWidget(
+                    price: transaction.amount,
+                  )
+                );
+              },
+            ),
           )
         ],
       ),

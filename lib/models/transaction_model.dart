@@ -14,5 +14,5 @@ class TransactionModel {
   static List<TransactionModel> mockData = [
     TransactionModel(id: 't1', title: 'New Shoes', amount: 129.99, date: DateTime.now()),
     TransactionModel(id: 't2', title: 'Groceries', amount: 10.90, date: DateTime.now()),
-  ]
+  ];
 }

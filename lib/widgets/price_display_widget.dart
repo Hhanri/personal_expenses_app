@@ -7,18 +7,16 @@ class PriceDisplayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 15
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.black,
           width: 2
         )
       ),
-      child: Text("${price} \$",
+      child: Text(
+        "$price \$",
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 18

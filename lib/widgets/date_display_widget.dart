@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DateDisplayWidget extends StatelessWidget {
   final DateTime date;
@@ -7,7 +8,7 @@ class DateDisplayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      date.toString(),
+      DateFormat.yMMMd().format(date),
       style: const TextStyle(
         fontSize: 14,
         color: Colors.blueGrey
