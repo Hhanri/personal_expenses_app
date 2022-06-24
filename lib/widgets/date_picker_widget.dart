@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class DatePickerWidget extends StatelessWidget {
   final DateTime? date;
   final void Function(DateTime?) onChange;
-  const DatePickerWidget({Key? key, this.date, required this.onChange}) : super(key: key);
+  const DatePickerWidget({Key? key, required this.date, required this.onChange}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

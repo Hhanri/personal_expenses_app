@@ -38,11 +38,14 @@ class _AddTransactionWidgetState extends State<AddTransactionWidget> {
         children: [
           TextFormFieldWidget(controller: titleController, parameters: TitleTextFieldParameters()),
           TextFormFieldWidget(controller: amountController, parameters: AmountTextFieldParameters()),
-          DatePickerWidget(onChange: (newDate) {
-            setState(() {
-              date = newDate;
-            });
-          }),
+          DatePickerWidget(
+            date: date,
+            onChange: (newDate) {
+              setState(() {
+                date = newDate;
+              });
+            }
+          ),
           ElevatedButton(
             onPressed: () {
               widget.addTransaction(titleController.text, double.parse(amountController.text), date ?? DateTime.now());
