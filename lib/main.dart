@@ -23,41 +23,46 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: HomeView()
-    );
-  }
+  State<HomePage> createState() => _HomePageState();
 }
 
-class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
-
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
+class _HomePageState extends State<HomePage> {
   List<TransactionModel> transactions = [...TransactionModel.mockData];
 
-  void addTransaction(String title, double amount) {
+  void _addTransaction(String title, double amount) {
     setState(() {
       transactions.add(TransactionModel(id: UniqueKey().toString(), title: title, amount: amount, date: DateTime.now()));
     });
   }
+
+  void _startAddNewTransaction(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: AddTransactionWidget(addTransaction: _addTransaction)
+        );
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AddTransactionWidget(addTransaction: addTransaction,),
-        Expanded(
-          child: TransactionsListWidget(transactions: transactions,)
-        )
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () =>_startAddNewTransaction(context), icon: const  Icon(Icons.add))
+        ],
+      ),
+      body: Expanded(
+        child: TransactionsListWidget(transactions: transactions,)
+      )
     );
   }
 }

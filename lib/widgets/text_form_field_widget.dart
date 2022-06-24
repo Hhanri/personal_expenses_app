@@ -17,7 +17,7 @@ class TextFormFieldWidget extends StatelessWidget {
           hintText: parameters.hint
         ),
         inputFormatters: parameters.inputFormatters,
-        keyboardType: ,
+        keyboardType: parameters.keyboard,
         validator: parameters.validator,
       ),
     );
