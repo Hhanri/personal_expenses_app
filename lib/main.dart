@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pesronal_expenses_app/models/transaction_model.dart';
 import 'package:pesronal_expenses_app/widgets/add_transaction_widget.dart';
+import 'package:pesronal_expenses_app/widgets/no_transaction_widget.dart';
 import 'package:pesronal_expenses_app/widgets/transactions_list_widget.dart';
 
 void main() {
@@ -16,6 +17,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        textTheme: const TextTheme(
+          headline4: TextStyle(
+            fontFamily: 'Quicksand',
+            fontSize: 18,
+            fontWeight: FontWeight.bold
+          )
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          )
+        ),
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(),
@@ -31,7 +46,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<TransactionModel> transactions = [...TransactionModel.mockData];
+  List<TransactionModel> transactions = [];//[...TransactionModel.mockData];
 
   void _addTransaction(String title, double amount) {
     setState(() {
@@ -57,14 +72,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Personal Expenses'),
         actions: [
           IconButton(onPressed: () => _startAddNewTransaction(context), icon: const  Icon(Icons.add))
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(child: TransactionsListWidget(transactions: transactions,)),
-        ],
+      body: transactions.isEmpty
+        ? const NoTransactionWidget()
+        : Column(
+            children: [
+              Expanded(child: TransactionsListWidget(transactions: transactions,)),
+            ],
       )
     );
   }

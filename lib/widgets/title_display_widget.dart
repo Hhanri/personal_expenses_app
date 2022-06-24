@@ -8,10 +8,7 @@ class TitleDisplayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold
-      ),
+      style: Theme.of(context).textTheme.headline4
     );
   }
 }
