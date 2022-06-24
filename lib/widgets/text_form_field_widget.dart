@@ -17,6 +17,7 @@ class TextFormFieldWidget extends StatelessWidget {
           hintText: parameters.hint
         ),
         inputFormatters: parameters.inputFormatters,
+        keyboardType: ,
         validator: parameters.validator,
       ),
     );
@@ -26,12 +27,14 @@ class TextFormFieldParameters {
   final String? Function(String?) validator;
   final String label;
   final String hint;
+  final TextInputType keyboard;
   List<TextInputFormatter> inputFormatters;
   TextFormFieldParameters({
     required this.validator,
     required this.label,
     required this.hint,
-    required this.inputFormatters
+    required this.inputFormatters,
+    required this.keyboard
   });
 }
 
@@ -45,6 +48,7 @@ class TitleTextFieldParameters extends TextFormFieldParameters {
     inputFormatters: [
       FilteringTextInputFormatter.singleLineFormatter
     ],
+    keyboard: TextInputType.text
   );
 }
 
@@ -62,5 +66,6 @@ class AmountTextFieldParameters extends TextFormFieldParameters {
       FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d{0,2})')),
       FilteringTextInputFormatter.singleLineFormatter
     ],
+    keyboard: TextInputType.number
   );
 }

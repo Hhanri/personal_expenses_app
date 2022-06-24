@@ -15,7 +15,7 @@ class PriceDisplayWidget extends StatelessWidget {
         )
       ),
       child: Text(
-        "$price \$",
+        "${price.toStringAsFixed(2)} \$",
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           fontWeight: FontWeight.bold,
