@@ -36,7 +36,7 @@ class ChartWidget extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: groupedTransactionValues.map((day) {
+          children: groupedTransactionValues.reversed.map((day) {
             return Expanded(
               child: ChartBarWidget(
                 label: day['day'],
@@ -70,7 +70,7 @@ class ChartBarWidget extends StatelessWidget {
         SizedBox(
           height: 20,
           child: FittedBox(
-            child: Text(spendingAmount.toStringAsFixed(2))
+            child: Text("\$ ${spendingAmount.toStringAsFixed(2)}")
           ),
         ),
         const SizedBox(height: 4,),
@@ -78,6 +78,7 @@ class ChartBarWidget extends StatelessWidget {
           height: 80,
           width: 10,
           child: Stack(
+            alignment: Alignment.bottomCenter,
             children: [
               Container(
                 decoration: BoxDecoration(

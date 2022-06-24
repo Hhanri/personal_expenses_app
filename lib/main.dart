@@ -55,9 +55,16 @@ class _HomePageState extends State<HomePage> {
     }).toList();
   }
 
-  void _addTransaction(String title, double amount) {
+  void _addTransaction(String title, double amount, DateTime date) {
     setState(() {
-      transactions.add(TransactionModel(id: UniqueKey().toString(), title: title, amount: amount, date: DateTime.now()));
+      transactions.add(
+        TransactionModel(
+          id: UniqueKey().toString(),
+          title: title,
+          amount: amount,
+          date: date
+        )
+      );
     });
     Navigator.of(context).pop();
   }
