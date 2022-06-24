@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       transactions.add(TransactionModel(id: UniqueKey().toString(), title: title, amount: amount, date: DateTime.now()));
     });
+    Navigator.of(context).pop();
   }
 
   void _startAddNewTransaction(BuildContext context) {
@@ -57,11 +58,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () =>_startAddNewTransaction(context), icon: const  Icon(Icons.add))
+          IconButton(onPressed: () => _startAddNewTransaction(context), icon: const  Icon(Icons.add))
         ],
       ),
-      body: Expanded(
-        child: TransactionsListWidget(transactions: transactions,)
+      body: Column(
+        children: [
+          Expanded(child: TransactionsListWidget(transactions: transactions,)),
+        ],
       )
     );
   }
