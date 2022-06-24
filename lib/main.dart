@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pesronal_expenses_app/models/transaction_model.dart';
 import 'package:pesronal_expenses_app/widgets/add_transaction_widget.dart';
+import 'package:pesronal_expenses_app/widgets/chart_widget.dart';
 import 'package:pesronal_expenses_app/widgets/no_transaction_widget.dart';
 import 'package:pesronal_expenses_app/widgets/transactions_list_widget.dart';
 
@@ -46,7 +47,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<TransactionModel> transactions = [];//[...TransactionModel.mockData];
+  List<TransactionModel> transactions = [...TransactionModel.mockData];
+
+  List<TransactionModel> get recentTransactions {
+    return transactions.where((element) {
+      return element.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
 
   void _addTransaction(String title, double amount) {
     setState(() {
@@ -81,7 +88,14 @@ class _HomePageState extends State<HomePage> {
         ? const NoTransactionWidget()
         : Column(
             children: [
-              Expanded(child: TransactionsListWidget(transactions: transactions,)),
+              SizedBox(
+                height: 180,
+                child: ChartWidget(transactions: recentTransactions,)
+              ),
+              Expanded(
+                flex: 5,
+                child: TransactionsListWidget(transactions: transactions,)
+              ),
             ],
       )
     );
