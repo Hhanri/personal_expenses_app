@@ -35,7 +35,7 @@ class ChartWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: groupedTransactionValues.reversed.map((day) {
             return Expanded(
               child: ChartBarWidget(
@@ -66,6 +66,7 @@ class ChartBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
         SizedBox(
           height: 20,
@@ -74,29 +75,31 @@ class ChartBarWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4,),
-        SizedBox(
-          height: 80,
-          width: 10,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 2),
-                  color: const Color.fromARGB(220, 220, 220, 1),
-                  borderRadius: BorderRadius.circular(8)
-                ),
-              ),
-              FractionallySizedBox(
-                heightFactor: spendingPercentage,
-                child: Container(
+        FittedBox(
+          child: SizedBox(
+            height: 80,
+            width: 10,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    border: Border.all(color: Colors.grey, width: 2),
+                    color: const Color.fromARGB(220, 220, 220, 1),
                     borderRadius: BorderRadius.circular(8)
                   ),
                 ),
-              )
-            ],
+                FractionallySizedBox(
+                  heightFactor: spendingPercentage,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(8)
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 4,),

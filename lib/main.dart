@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pesronal_expenses_app/models/transaction_model.dart';
+import 'package:pesronal_expenses_app/views/landscape_view.dart';
+import 'package:pesronal_expenses_app/views/portrait_view.dart';
 import 'package:pesronal_expenses_app/widgets/add_transaction_widget.dart';
 import 'package:pesronal_expenses_app/widgets/chart_widget.dart';
-import 'package:pesronal_expenses_app/widgets/no_transaction_widget.dart';
+import 'package:pesronal_expenses_app/views/no_transaction_view.dart';
 import 'package:pesronal_expenses_app/widgets/transactions_list_widget.dart';
 
 void main() {
@@ -99,21 +101,9 @@ class _HomePageState extends State<HomePage> {
       ),
       body: transactions.isEmpty
         ? const NoTransactionWidget()
-        : Column(
-            children: [
-              SizedBox(
-                height: 180,
-                child: ChartWidget(transactions: recentTransactions,)
-              ),
-              Expanded(
-                flex: 5,
-                child: TransactionsListWidget(
-                  transactions: transactions,
-                  onDelete: deleteTransaction,
-                )
-              ),
-            ],
-      )
+        : MediaQuery.of(context).orientation == Orientation.portrait
+          ? PortraitView(transactions: transactions, recentTransactions: recentTransactions, deleteTransaction: deleteTransaction)
+          : LandscapeView(transactions: transactions, recentTransactions: recentTransactions, deleteTransaction: deleteTransaction)
     );
   }
 }

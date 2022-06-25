@@ -31,28 +31,35 @@ class _AddTransactionWidgetState extends State<AddTransactionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          TextFormFieldWidget(controller: titleController, parameters: TitleTextFieldParameters()),
-          TextFormFieldWidget(controller: amountController, parameters: AmountTextFieldParameters()),
-          DatePickerWidget(
-            date: date,
-            onChange: (newDate) {
-              setState(() {
-                date = newDate;
-              });
-            }
-          ),
-          ElevatedButton(
-            onPressed: () {
-              widget.addTransaction(titleController.text, double.parse(amountController.text), date ?? DateTime.now());
-            },
-            child: const Text("Add Transaction")
-          )
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 10
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            TextFormFieldWidget(controller: titleController, parameters: TitleTextFieldParameters()),
+            TextFormFieldWidget(controller: amountController, parameters: AmountTextFieldParameters()),
+            DatePickerWidget(
+              date: date,
+              onChange: (newDate) {
+                setState(() {
+                  date = newDate;
+                });
+              }
+            ),
+            ElevatedButton(
+              onPressed: () {
+                widget.addTransaction(titleController.text, double.parse(amountController.text), date ?? DateTime.now());
+              },
+              child: const Text("Add Transaction")
+            )
+          ],
+        ),
       ),
     );
   }
