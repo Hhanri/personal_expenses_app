@@ -64,47 +64,52 @@ class ChartBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        SizedBox(
-          height: 20,
-          child: FittedBox(
-            child: Text("\$${spendingAmount.toStringAsFixed(2)}")
-          ),
-        ),
-        const SizedBox(height: 4,),
-        FittedBox(
-          child: SizedBox(
-            height: 80,
-            width: 10,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 2),
-                    color: const Color.fromARGB(220, 220, 220, 1),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),
-                FractionallySizedBox(
-                  heightFactor: spendingPercentage,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(8)
-                    ),
-                  ),
-                )
-              ],
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 20,
+              child: FittedBox(
+                child: Text("\$${spendingAmount.toStringAsFixed(2)}")
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 4,),
-        Text(label)
-      ],
+            const SizedBox(height: 4,),
+            FittedBox(
+              child: SizedBox(
+                height: constraints.maxHeight * 0.6,
+                width: 10,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 2),
+                        color: const Color.fromARGB(220, 220, 220, 1),
+                        borderRadius: BorderRadius.circular(8)
+                      ),
+                    ),
+                    FractionallySizedBox(
+                      heightFactor: spendingPercentage,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(8)
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 4,),
+            Text(label)
+          ],
+        );
+      },
     );
   }
 }

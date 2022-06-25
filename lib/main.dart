@@ -1,11 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pesronal_expenses_app/models/transaction_model.dart';
 import 'package:pesronal_expenses_app/views/landscape_view.dart';
 import 'package:pesronal_expenses_app/views/portrait_view.dart';
 import 'package:pesronal_expenses_app/widgets/add_transaction_widget.dart';
-import 'package:pesronal_expenses_app/widgets/chart_widget.dart';
 import 'package:pesronal_expenses_app/views/no_transaction_view.dart';
-import 'package:pesronal_expenses_app/widgets/transactions_list_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -92,18 +93,36 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Personal Expenses'),
-        actions: [
-          IconButton(onPressed: () => _startAddNewTransaction(context), icon: const  Icon(Icons.add))
-        ],
-      ),
-      body: transactions.isEmpty
-        ? const NoTransactionWidget()
-        : MediaQuery.of(context).orientation == Orientation.portrait
-          ? PortraitView(transactions: transactions, recentTransactions: recentTransactions, deleteTransaction: deleteTransaction)
-          : LandscapeView(transactions: transactions, recentTransactions: recentTransactions, deleteTransaction: deleteTransaction)
-    );
+
+    final dynamic appBar = Platform.isIOS
+      ? CupertinoNavigationBar(
+          middle: const Text('Personal Expenses'),
+          trailing: CupertinoButton(onPressed: () => _startAddNewTransaction(context), child: const Icon(Icons.add),)
+      ,
+        )
+      : AppBar(
+          title: const Text('Personal Expenses'),
+          actions: [
+            IconButton(onPressed: () => _startAddNewTransaction(context), icon: const  Icon(Icons.add))
+          ],
+        );
+
+    return Platform.isIOS
+      ? CupertinoPageScaffold(
+          navigationBar: appBar,
+          child: pageBody(),
+        )
+      : Scaffold(
+          appBar: appBar,
+          body: pageBody()
+        );
+  }
+
+  Widget pageBody() {
+    return transactions.isEmpty
+      ? const NoTransactionWidget()
+      : MediaQuery.of(context).orientation == Orientation.portrait
+        ? PortraitView(transactions: transactions, recentTransactions: recentTransactions, deleteTransaction: deleteTransaction)
+        : LandscapeView(transactions: transactions, recentTransactions: recentTransactions, deleteTransaction: deleteTransaction);
   }
 }

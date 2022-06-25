@@ -13,7 +13,10 @@ class PortraitView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ChartWidget(transactions: recentTransactions,),
+        Expanded(
+          flex: 3,
+          child: ChartWidget(transactions: recentTransactions,)
+        ),
         Expanded(
           flex: 5,
           child: TransactionsListWidget(
